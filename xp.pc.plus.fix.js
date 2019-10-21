@@ -3,10 +3,10 @@
 //不需要保证 plus.* 觉得正确执行。
 
 
-(function () {}(
+(function () {
     function EmptyFunction() {
 
-    },
+    }
 
     window.plus = {
         device: {
@@ -33,7 +33,7 @@
         net: {
             XMLHttpRequest: XMLHttpRequest
         }
-    },
+    }
 
     function addLog(obj) {
         Object.keys(obj).forEach((modules) => {
@@ -47,9 +47,9 @@
                 }
             })
         })
-    },
-    addLog(window.plus),
+    }
+    addLog(window.plus)
     window.addEventListener('load', function () {
         document.dispatchEvent(new Event("plusready"))
     }, false)
-));
+}());
