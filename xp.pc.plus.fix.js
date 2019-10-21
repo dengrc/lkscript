@@ -9,6 +9,14 @@
     }
 
     window.plus = {
+        audio: {
+            createPlayer: function () {
+                return {
+                    close: EmptyFunction,
+                    addEventListener: EmptyFunction
+                }
+            }
+        },
         bridge: {
             exec: EmptyFunction,
             callbackId: EmptyFunction
@@ -17,8 +25,8 @@
             model: "desktop",
             barnd: "lk"
         },
-        key:{
-            addEventListener:EmptyFunction
+        key: {
+            addEventListener: EmptyFunction
         },
         net: {
             XMLHttpRequest: XMLHttpRequest
