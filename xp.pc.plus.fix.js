@@ -9,29 +9,36 @@
     }
 
     window.plus = {
+        bridge: {
+            exec: EmptyFunction,
+            callbackId: EmptyFunction
+        },
         device: {
             model: "desktop",
             barnd: "lk"
+        },
+        key:{
+            addEventListener:EmptyFunction
+        },
+        net: {
+            XMLHttpRequest: XMLHttpRequest
         },
         runtime: {
             version: "*",
             quit: EmptyFunction,
             openFile: EmptyFunction
         },
-        storage: localStorage,
         screen: {
             lockOrientation: EmptyFunction
         },
+        storage: localStorage,
+
         nativeUI: {
             showWaiting: EmptyFunction,
             closeWaiting: EmptyFunction
         },
-        bridge: {
-            exec: EmptyFunction,
-            callbackId: EmptyFunction
-        },
-        net: {
-            XMLHttpRequest: XMLHttpRequest
+        navigator: {
+            closeSplashscreen: EmptyFunction
         }
     }
 
@@ -42,7 +49,7 @@
                 if (value[key] === EmptyFunction) {
                     value[key] = function () {
                         console.log(`plus.${modules}.${key}`);
-                        console.log.apply(console, [].slice.call(arguments));
+                        //console.log.apply(console, [].slice.call(arguments));
                     }
                 }
             })
