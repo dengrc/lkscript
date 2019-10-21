@@ -48,5 +48,8 @@
             })
         })
     },
-    addLog(window.plus)
+    addLog(window.plus),
+    window.addEventListener('load', function () {
+        document.dispatchEvent(new Event("plusready"))
+    }, false)
 ));
