@@ -1,7 +1,7 @@
 //这个 js 主要用于，pc 端访问 xp h5 app 时。
 //不会因为缺少 plus.* api 报错。
 //不需要保证 plus.* 觉得正确执行。
-
+import Barcode from "./Barcode.js"
 
 (function () {
     function EmptyFunction() {
@@ -17,6 +17,9 @@
                 }
             }
         },
+        barcode: {
+            Barcode: Barcode
+        },
         bridge: {
             exec: EmptyFunction,
             callbackId: EmptyFunction
@@ -26,7 +29,11 @@
             barnd: "lk"
         },
         key: {
-            addEventListener: EmptyFunction
+            addEventListener: EmptyFunction,
+            hideSoftKeybord: EmptyFunction
+        },
+        io: {
+            convertLocalFileSystemURL: EmptyFunction
         },
         net: {
             XMLHttpRequest: XMLHttpRequest
@@ -36,6 +43,10 @@
             quit: EmptyFunction,
             openFile: EmptyFunction
         },
+        speech: {
+            startRecognize: EmptyFunction,
+            stopRecognize: EmptyFunction,
+        },
         screen: {
             lockOrientation: EmptyFunction
         },
@@ -43,10 +54,19 @@
 
         nativeUI: {
             showWaiting: EmptyFunction,
-            closeWaiting: EmptyFunction
+            closeWaiting: EmptyFunction,
+            showPrompt: function (message, onComplete) {
+                var value = prompt(message);
+                onComplete(value.trim())
+            }
         },
         navigator: {
-            closeSplashscreen: EmptyFunction
+            closeSplashscreen: EmptyFunction,
+            setFullscreen: EmptyFunction,
+            isFullscreen: EmptyFunction
+        },
+        webview: {
+            getLaunchWebview: EmptyFunction
         }
     }
 
