@@ -39,6 +39,17 @@ const plus = {
         exec: EmptyFunction,
         callbackId: EmptyFunction
     },
+    bluetooth: {
+        openBluetoothAdapter: EmptyFunction,
+        startBluetoothDevicesDiscovery: EmptyFunction,
+        stopBluetoothDevicesDiscovery: EmptyFunction,
+        getConnectedBluetoothDevices: EmptyFunction,
+        getBluetoothDevices: EmptyFunction,
+        getBluetoothAdapterState: EmptyFunction,
+        closeBluetoothAdapter: EmptyFunction,
+        onBluetoothDeviceFound: EmptyFunction,
+        onBluetoothAdapterStateChange: EmptyFunction
+    },
     device: {
         model: "desktop",
         barnd: "lk",
