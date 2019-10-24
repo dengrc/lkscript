@@ -104,6 +104,6 @@ const plus = {
 addLog(plus)
 
 window.plus = plus;
-window.addEventListener('load', function () {
+document.addEventListener('DOMContentLoaded', function () {
     document.dispatchEvent(new Event("plusready"))
-}, false)
+}, false);
