@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, viewport-fit=cover">
+	<title>测试插件</title>
+</head>
+<style>
+	body {
+		font-size: 16px;
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	section {
+		margin: 1em;
+		padding: 0.5em;
+		border: 1px solid #eee;
+	}
+
+	button {
+		background: #007AFF;
+		color: #fff;
+		border: none;
+		display: block;
+		width: 100%;
+		line-height: 2.4em;
+		height: 2.4em;
+		text-align: center;
+	}
+
+	input,
+	textarea {
+		margin-bottom: 1em;
+		background: none;
+		border: 1px solid #ddd;
+		padding: 0.7em;
+		width: 100%;
+	}
+</style>
+<script>
+	function openChar() {
+		let shareComponet = uni.requireNativePlugin('share');
+		shareComponet.openChar();
+	}
+</script>
+
+<body>
+	<button onclick="location.reload(true)">刷新页面</button>
+	<section>
+		<input />
+		<input />
+		<button onclick="openChar()">客服</button>
+	</section>
+</body>
+<script>
+	//Polyfill
+	if (typeof Object.assign != 'function') {
+		// Must be writable: true, enumerable: false, configurable: true
+		Object.defineProperty(Object, "assign", {
+			value: function assign(target, varArgs) { // .length of function is 2
+				if (target == null) { // TypeError if undefined or null
+					throw new TypeError('Cannot convert undefined or null to object');
+				}
+
+				let to = Object(target);
+
+				for (var index = 1; index < arguments.length; index++) {
+					var nextSource = arguments[index];
+
+					if (nextSource != null) { // Skip over if undefined or null
+						for (let nextKey in nextSource) {
+							// Avoid bugs when hasOwnProperty is shadowed
+							if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+								to[nextKey] = nextSource[nextKey];
+							}
+						}
+					}
+				}
+				return to;
+			},
+			writable: true,
+			configurable: true
+		});
+	}
+	if (!window.CSS || window.CSS && !CSS.supports) {
+		if (!CSS.supports) {
+			(function () {
+				var div = document.createElement("div");
+				CSS.supports = function (propertyName, value) {
+					div.style[propertyName] = value;
+					return div.style[propertyName] === value
+				}
+			}())
+		}
+	}
+	if (!Object.freeze) {
+		Object.freeze = function (object) { return object }
+	}
+</script>
+<script>
+	//plugin config
+	var __h5appPluginsMap = Object.freeze({
+		share: ["share", "openChar", "openQQ"],
+		scan: ["initScan", "close", "connect", "openBlue"],
+		push: ["initPush"],
+		growing: ["growingtrack",
+			"growingsetpage",
+			"growingsetuserid",
+			"growingsetpeople",
+			"growingclearuserid"
+		],
+		speak: ["speak"],
+		photo: [],
+		print: ["openBlue", "wifiList", "printWriteChinese", "printWrite", "connectWifi", "connect", "blueList", "close"],
+		back: [],
+		down: ["downLoadApp"]
+	});
+</script>
+<script type="text/javascript">
+	window.uni = {};
+	(function () {
+		function EmptySuccess() {
+
+		}
+		function plusReady() {
+			const plugins = {};
+			Object.keys(__h5appPluginsMap).forEach(function (key) {
+				var FunctionNames = __h5appPluginsMap[key];
+				var ary = key.split(':');
+				var name = ary[0];
+				var FeatureName = ary[1];
+				if (!FeatureName) {
+					FeatureName = name
+				}
+				if (!plugins[name]) {
+					plugins[name] = {}
+				}
+				FunctionNames.forEach(function (FunctionName) {
+					plugins[name][FunctionName] = function (options, success, fail) {
+						if (!window.plus) {
+							return
+						}
+						plus.bridge.exec(FeatureName, FunctionName, [plus.bridge.callbackId(success ? function () {
+							var args = [].slice.call(arguments).map(function (arg) {
+								return arg === 1 ? true : arg === 0 ? false : arg
+							});
+							success.apply(null, args);
+						} : EmptySuccess, fail || function (e) {
+							console.log("plugin fail", name, FunctionName);
+							console.error(e)
+						}), options]);
+					}
+				})
+			});
+
+			Object.assign(uni, {
+				requireNativePlugin: function (name) {
+					return plugins[name]
+				}
+			});
+
+			[
+				"openBluetoothAdapter",
+				"startBluetoothDevicesDiscovery",
+				"stopBluetoothDevicesDiscovery",
+				"getConnectedBluetoothDevices",
+				"getBluetoothDevices",
+				"getBluetoothAdapterState",
+				"closeBluetoothAdapter",
+			].forEach(function (name) {
+				uni[name] = function (options) {
+					plus.bluetooth[name](Object.assign({
+						success: EmptySuccess,
+						fail: EmptyFail,
+						complete: EmptyComplete
+					}, options))
+				}
+			});
+
+			["onBluetoothDeviceFound", "onBluetoothAdapterStateChange"].forEach(function (name) {
+				uni[name] = function (callback) {
+					plus.bluetooth[name](callback || EmptySuccess)
+				}
+			});
+		}
+		if (window.plus) {
+			plusReady();
+		} else {
+			document.addEventListener('plusready', plusReady, false);
+		}
+	}());
+</script>
+
+</html>
