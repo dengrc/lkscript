@@ -47,14 +47,26 @@
 		let shareComponet = uni.requireNativePlugin('share');
 		shareComponet.openChar();
 	}
+
+	function openBluetoothAdapter() {
+		uni.openBluetoothAdapter({
+			success: function (e) {
+				alert('open success: ' + JSON.stringify(e));
+			},
+			fail: function (e) {
+				alert('open failed: ' + JSON.stringify(e));
+			}
+		})
+	}
 </script>
 
 <body>
 	<button onclick="location.reload(true)">刷新页面</button>
 	<section>
-		<input />
-		<input />
 		<button onclick="openChar()">客服</button>
+	</section>
+	<section>
+		<button onclick="openBluetoothAdapter()">初始化蓝牙模块</button>
 	</section>
 </body>
 <script>
@@ -127,6 +139,12 @@
 		function EmptySuccess() {
 
 		}
+		function EmptyFail() {
+
+		}
+		function EmptyComplete() {
+
+		}
 		function plusReady() {
 			const plugins = {};
 			Object.keys(__h5appPluginsMap).forEach(function (key) {
@@ -145,6 +163,7 @@
 						if (!window.plus) {
 							return
 						}
+						alert([FeatureName, FunctionName].join(","));
 						plus.bridge.exec(FeatureName, FunctionName, [plus.bridge.callbackId(success ? function () {
 							var args = [].slice.call(arguments).map(function (arg) {
 								return arg === 1 ? true : arg === 0 ? false : arg
