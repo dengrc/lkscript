@@ -85,6 +85,13 @@ const plus = {
         prompt: function (message, onComplete) {
             var value = prompt(message);
             onComplete(value ? value.trim() : value)
+        },
+        confirm: function (options) {
+            var a = confirm(options.content);
+            options.success({
+                confirm: a,
+                cancel: !!a
+            })
         }
     },
     navigator: {
