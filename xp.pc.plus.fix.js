@@ -87,7 +87,7 @@ const plus = {
             onComplete(value ? value.trim() : value)
         },
         confirm: function (message, onComplete, options) {
-            var a = confirm(options.content);
+            var a = confirm(message);
             onComplete({
                 index: a ? 0 : 1
             })
