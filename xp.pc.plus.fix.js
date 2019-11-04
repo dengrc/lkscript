@@ -96,7 +96,13 @@ const plus = {
     navigator: {
         closeSplashscreen: EmptyFunction,
         setFullscreen: EmptyFunction,
-        isFullscreen: EmptyFunction
+        isFullscreen: EmptyFunction,
+        getOrientation:function(){
+            return 0
+        },
+        getStatusbarHeight:function(){
+            return 0
+        }
     },
     webview: {
         getLaunchWebview: EmptyFunction,
