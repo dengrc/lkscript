@@ -14,6 +14,9 @@ class WebView{
     onerror(){
         
     }
+    setStyle(){
+        
+    }
 }
 
 export default WebView

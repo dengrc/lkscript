@@ -107,6 +107,7 @@ const plus = {
     webview: {
         getLaunchWebview: EmptyFunction,
         getWebviewById: EmptyFunction,
+        currentWebview:new WebView(),
         create: function (url, id, styles) {
             return new WebView(...arguments)
         }
