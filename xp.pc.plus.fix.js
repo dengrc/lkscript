@@ -91,6 +91,9 @@ const plus = {
             onComplete({
                 index: a ? 0 : 1
             })
+        },
+        toast:function(message, styles){
+
         }
     },
     navigator: {
